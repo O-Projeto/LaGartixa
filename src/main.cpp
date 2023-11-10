@@ -10,22 +10,24 @@
 #define INCLUDE_GAMEPAD_MODULE
 #include <DabbleESP32.h>
 
+// Pinos
+
 const int motorA1 = 17;
 const int motorA2 = 05;
 const int PWM_A = 19;
+
 const int motorB1 = 16;
 const int motorB2 = 04;
 const int PWM_B = 18;
 
 
-const int PWM_A_Chan = 0;
-const int PWM_A_Freq = 500;
-const int PWM_A_Res = 8;
-const int PWM_B_Chan = 0;
+const int PWM_A_Chan = 0;   // canal de PWM 1 - 16 disponíveis
+const int PWM_A_Freq = 500;   // Frequência
+const int PWM_A_Res = 8;    // Resolução 1 - 16 bits | 8 bits = valores de 0-255
+
+const int PWM_B_Chan = 0;   
 const int PWM_B_Freq = 500;
 const int PWM_B_Res = 8;
-
-
 
 
 void moveFrente(int vel) {
@@ -76,41 +78,51 @@ void parar() {
 }
 
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);      // make sure your Serial Monitor is also set at this baud rate.
-  Dabble.begin("Lagartixa");       //set bluetooth name of your device
 
-  pinMode(motorA1, OUTPUT);
+  Serial.begin(9600);      // Certifique-se que seu Serial Monitor também está nesse baud rate.
+  Dabble.begin("Lagartixa");       // Nome do dispositivo 
+
+  pinMode(motorA1, OUTPUT); // Definição de cada tipo dos pins
   pinMode(motorA2, OUTPUT);
   pinMode(motorB1, OUTPUT);
   pinMode(motorB2, OUTPUT);
-  ledcSetup(PWM_A_Chan, PWM_A_Freq, PWM_A_Res);
-  ledcSetup(PWM_B_Chan, PWM_B_Freq, PWM_B_Res);
+  ledcSetup(PWM_A_Chan, PWM_A_Freq, PWM_A_Res);   // configurando o PWM
+  ledcSetup(PWM_B_Chan, PWM_B_Freq, PWM_B_Res);   
 
 
-  ledcAttachPin(PWM_A, PWM_A_Chan);
+  ledcAttachPin(PWM_A, PWM_A_Chan);    // Linkando o  canal para os pinos
   ledcAttachPin(PWM_B, PWM_B_Chan);
 }
 
 void loop() {
-  Dabble.processInput();             //this function is used to refresh data obtained from smartphone.Hence calling this function is mandatory in order to get data properly from your mobile.
+  Dabble.processInput();             
   Serial.println("KeyPressed: \n");
 
   if (GamePad.isUpPressed())
   {
+
     Serial.print("Up");
     moveFrente(255);
+
   } else if (GamePad.isDownPressed()) {
+
     Serial.print("Down");
     moveTras(255);
+
   } else if (GamePad.isRightPressed()) {
+
     Serial.print("Right");
     movedireita(100);
+
   } else if (GamePad.isLeftPressed()) {
+
     Serial.print("Left");
     moveesquerda(100);
+
   } else {
+
     parar();
+    
   }
 
 }
