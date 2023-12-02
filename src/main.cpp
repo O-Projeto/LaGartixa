@@ -6,29 +6,28 @@
 
    Explore more on: https://thestempedia.com/docs/dabble/game-pad-module/
 */
+
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
 #include <DabbleESP32.h>
 
 // Pinos
 
-const int motorA1 = 17;
-const int motorA2 = 05;
-const int PWM_A = 19;
+const unsigned int motorA1 = 17;
+const unsigned int motorA2 = 05;
+const unsigned int PWM_A = 19;
 
-const int motorB1 = 16;
-const int motorB2 = 04;
-const int PWM_B = 18;
+const unsigned int motorB1 = 16;
+const unsigned int motorB2 = 04;
+const unsigned int PWM_B = 18;
 
+const unsigned int PWM_A_Chan = 0;   // canal de PWM 1 - 16 disponíveis
+const unsigned int PWM_A_Freq = 500;   // Frequência
+const unsigned int PWM_A_Res = 8;    // Resolução 1 - 16 bits | 8 bits = valores de 0-255
 
-const int PWM_A_Chan = 0;   // canal de PWM 1 - 16 disponíveis
-const int PWM_A_Freq = 500;   // Frequência
-const int PWM_A_Res = 8;    // Resolução 1 - 16 bits | 8 bits = valores de 0-255
-
-const int PWM_B_Chan = 0;   
-const int PWM_B_Freq = 500;
-const int PWM_B_Res = 8;
-
+const unsigned int PWM_B_Chan = 0;   
+const unsigned int PWM_B_Freq = 500;
+const unsigned int PWM_B_Res = 8;
 
 void moveFrente(int vel) {
   digitalWrite(motorA1, HIGH);
@@ -92,31 +91,31 @@ void setup() {
 
   ledcAttachPin(PWM_A, PWM_A_Chan);    // Linkando o  canal para os pinos
   ledcAttachPin(PWM_B, PWM_B_Chan);
+
 }
 
 void loop() {
   Dabble.processInput();             
-  Serial.println("KeyPressed: \n");
+  // Serial.println("KeyPressed: \n");
 
-  if (GamePad.isUpPressed())
-  {
+  if (GamePad.isUpPressed()){
 
-    Serial.print("Up");
+    // Serial.print("Up");
     moveFrente(255);
 
   } else if (GamePad.isDownPressed()) {
 
-    Serial.print("Down");
+    // Serial.print("Down");
     moveTras(255);
 
   } else if (GamePad.isRightPressed()) {
 
-    Serial.print("Right");
+    // Serial.print("Right");
     movedireita(100);
 
   } else if (GamePad.isLeftPressed()) {
 
-    Serial.print("Left");
+    // Serial.print("Left");
     moveesquerda(100);
 
   } else {
