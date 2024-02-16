@@ -13,13 +13,13 @@
 
 // Pinos
 
-const unsigned int motorA1 = 17;
-const unsigned int motorA2 = 05;
-const unsigned int PWM_A = 19;
+const unsigned int motorA1 = 21;
+const unsigned int motorA2 = 22;
+const unsigned int PWM_A = 23;
 
-const unsigned int motorB1 = 16;
-const unsigned int motorB2 = 04;
-const unsigned int PWM_B = 18;
+const unsigned int motorB1 = 20;
+const unsigned int motorB2 = 17;
+const unsigned int PWM_B = 16;
 
 const unsigned int PWM_A_Chan = 0;   // canal de PWM 1 - 16 disponíveis
 const unsigned int PWM_A_Freq = 500;   // Frequência
