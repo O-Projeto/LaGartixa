@@ -13,12 +13,12 @@
 
 // Pinos
 
-const unsigned int motorA1 = 21;
-const unsigned int motorA2 = 22;
+const unsigned int motorA1 = 19;
+const unsigned int motorA2 = 18;
 const unsigned int PWM_A = 23;
 
-const unsigned int motorB1 = 20;
-const unsigned int motorB2 = 17;
+const unsigned int motorB1 = 21;
+const unsigned int motorB2 = 22;
 const unsigned int PWM_B = 16;
 
 const unsigned int PWM_A_Chan = 0;   // canal de PWM 1 - 16 disponíveis
@@ -72,6 +72,8 @@ void moveesquerda( int vel ) {
 void parar() {
   digitalWrite(motorA1, LOW);
   digitalWrite(motorA2, LOW);
+  digitalWrite(motorB1, LOW);
+  digitalWrite(motorB2, LOW);
   ledcWrite(PWM_A_Chan, 0);
   ledcWrite(PWM_B_Chan, 0);
 }
@@ -79,7 +81,7 @@ void parar() {
 void setup() {
 
   Serial.begin(9600);      // Certifique-se que seu Serial Monitor também está nesse baud rate.
-  Dabble.begin("Lagartixa");       // Nome do dispositivo 
+  Dabble.begin("Lagartixa on the job!");       // Nome do dispositivo 
 
   pinMode(motorA1, OUTPUT); // Definição de cada tipo dos pins
   pinMode(motorA2, OUTPUT);
@@ -111,17 +113,24 @@ void loop() {
   } else if (GamePad.isRightPressed()) {
 
     // Serial.print("Right");
-    movedireita(100);
+    movedireita(150);
 
   } else if (GamePad.isLeftPressed()) {
 
     // Serial.print("Left");
-    moveesquerda(100);
+    moveesquerda(150);
 
   } else {
 
     parar();
     
   }
+
+  // digitalWrite(motorA1, HIGH);
+  // digitalWrite(motorA2, LOW);
+  // digitalWrite(motorB1, HIGH);
+  // digitalWrite(motorB2, LOW);
+  // ledcWrite(PWM_A_Chan, 255);
+  // ledcWrite(PWM_B_Chan, 255);
 
 }
