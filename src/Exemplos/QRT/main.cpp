@@ -3,6 +3,8 @@
 
 QTRSensors qtr;
 
+const uint8_t SensorPins[] = {36, 39, 34, 35, 32, 33, 25, 26};
+const uint8_t SensorCount = sizeof(SensorPins) / sizeof(SensorPins[0]);
 uint16_t sensorValues[SensorCount];
 
 void setup()
@@ -11,6 +13,8 @@ void setup()
   qtr.setTypeAnalog();
   qtr.setSensorPins(SensorPins, SensorCount);
   qtr.setEmitterPin(4);
+  pinMode(4,OUTPUT);
+  digitalWrite(4,HIGH);
 
 
   delay(500);

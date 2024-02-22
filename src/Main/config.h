@@ -23,5 +23,3 @@
 
 
 // QTR pins 
-const uint8_t SensorPins[] = {36, 39, 34, 35, 32, 33, 25, 26};
-const uint8_t SensorCount = sizeof(SensorPins) / sizeof(SensorPins[0]);
