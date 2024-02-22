@@ -1,9 +1,9 @@
-# lagarta
-Yay 
+# LaGartixa
+Yao
 escrevendo 
 
-terminado em 9/11/23, a partir daqui não quiero mais levar para frente esse robo em específico, eu prefiro focar em outra coisa, esse vai ficar de exemplo
+Esse Projeto veio do interesse em realizar um seguidor de linha, do qual não seja só mais um no ramo!
 
-btw uma roda espanou :D 
+A LaGartixa conta com 2 motores N20 ( RPM desconhecida ), e 2 esteiras de borracha de silicone no lugar de pneus padrão (Robocore/Jsumo), controlado por um ESP32 (Marca D'O Projeto) e uma TB6612FNG!
 
-obs : andar em terreno não liso.
+Biblioteca do Sensor QTR: QTRSensors.h
