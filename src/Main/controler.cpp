@@ -22,9 +22,9 @@ float Controler::output(float input_value, float current_value){
     last_error = error;
     last_time = time;
     if(input_value == 0){
-        output_value =  input_value + proporcional() + derivative() ;
+        output_value =  proporcional() + derivative() ; // retirado "input value +" 
     }else{
-        output_value =  input_value +proporcional() + integrative() + derivative();
+        output_value =  proporcional() + integrative() + derivative();
     }
 
     // output_value = saturation(output_value,1000);

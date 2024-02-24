@@ -11,7 +11,7 @@ uint16_t sensorValues[SensorCount];
 #include <H_bridge_TB6612.hpp>
 #define channel2 1
 #define resolution_channel2 10
-
+#define SAT 500 
 Motor rightMotor = Motor(BIN1, BIN2, PWMB,  channel2, RESOLUTION);
 Motor leftMotor = Motor(AIN1, AIN2, PWMA,  channel1, RESOLUTION);
 
@@ -26,14 +26,22 @@ uint16_t position;
 float speed_left = 0;
 float speed_right = 0; 
 float speed_angular = 0 ;
-float speed_linear = 10; 
+float speed_linear = 500; 
 
 #include "controler.h"
-Controler  main_PID(1, 0, 0);  //(p,i,d)
+Controler  main_PID(0.3 , 0, 0);  //(p,i,d)
 
 const int SET_POINT = 3500;
 
 #include "cinematic.h"
+
+   float saturation(float speed){
+        if(speed> SAT)
+            speed = SAT;
+        if(speed < -SAT)
+            speed = 0;
+        return speed ;
+    }
 
 void debug();
 
@@ -55,7 +63,7 @@ void setup() {
     // 0.1 ms per sensor * 4 samples per sensor read (default) * 6 sensors
     // * 10 reads per calibrate() call = ~24 ms per calibrate() call.
     // Call calibrate() 400 times to make calibration take about 10 seconds.
-    for (uint16_t i = 0; i < 400; i++)
+    for (uint16_t i = 0; i < 300; i++)
     {
         qtr.calibrate();
     }
@@ -85,17 +93,22 @@ void setup() {
 
 void loop(){
 
-    position = qtr.readLineBlack(sensorValues);
+    position = qtr.readLineWhite(sensorValues);
 
     speed_angular = main_PID.output(SET_POINT,position);
 
-    speed_angular = map(speed_angular, 2500,4500,-100,100);
+    speed_angular = map(speed_angular, -350 , 350,-500, 500);
 
     speed_left = cinematic_left(speed_linear,speed_angular);
     speed_right = cinematic_right(speed_linear,speed_angular);
 
-    leftMotor.drive(speed_left);
-    rightMotor.drive(speed_right);
+
+
+ 
+
+
+    leftMotor.drive(saturation(speed_left));
+    rightMotor.drive(saturation(speed_right));
 
     debug();
     // main_PID.debug();
