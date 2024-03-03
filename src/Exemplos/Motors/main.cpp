@@ -18,7 +18,7 @@ void setup() {
 void loop() {
   // rightMotor.drive(900);
   // leftMotor.drive(900);
-  // //PWM for the right motor
+  //PWM for the right motor
   for(int i=0; i< 1000; i++) {
     rightMotor.drive(i);
     Serial.println(i);

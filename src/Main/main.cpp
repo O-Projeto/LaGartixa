@@ -1,17 +1,18 @@
 #include "config.h"
-#include "config.h"
+// #include "config.h"
 // #include "qtr.h"
 #include <QTRSensors.h>
+#include <H_bridge_TB6612.hpp>
 
 const uint8_t SensorPins[] = {36, 39, 34, 35, 32, 33, 25, 26};
 const uint8_t SensorCount = sizeof(SensorPins) / sizeof(SensorPins[0]);
 uint16_t sensorValues[SensorCount];
 
 
-#include <H_bridge_TB6612.hpp>
+
 #define channel2 1
 #define resolution_channel2 10
-#define SAT 500 
+#define SAT 600 
 Motor rightMotor = Motor(BIN1, BIN2, PWMB,  channel2, RESOLUTION);
 Motor leftMotor = Motor(AIN1, AIN2, PWMA,  channel1, RESOLUTION);
 
@@ -26,10 +27,10 @@ uint16_t position;
 float speed_left = 0;
 float speed_right = 0; 
 float speed_angular = 0 ;
-float speed_linear = 500; 
+float speed_linear = 600; 
 
 #include "controler.h"
-Controler  main_PID(0.3 , 0, 0);  //(p,i,d)
+Controler  main_PID(0.4 , 0, 0);  //(p,i,d)
 
 const int SET_POINT = 3500;
 
@@ -94,26 +95,39 @@ void setup() {
 void loop(){
 
     position = qtr.readLineWhite(sensorValues);
+    Serial.println(position);
 
-    speed_angular = main_PID.output(SET_POINT,position);
+    //speed_angular = main_PID.output(SET_POINT,position);
 
-    speed_angular = map(speed_angular, -350 , 350,-500, 500);
+    //speed_angular = map(speed_angular, -350 , 350,-500, 500);
 
-    speed_left = cinematic_left(speed_linear,speed_angular);
-    speed_right = cinematic_right(speed_linear,speed_angular);
-
-
-
- 
+    //speed_left = cinematic_left(speed_linear,speed_angular);
+    //speed_right = cinematic_right(speed_linear,speed_angular);
 
 
-    leftMotor.drive(saturation(speed_left));
-    rightMotor.drive(saturation(speed_right));
 
-    debug();
+    //leftMotor.drive(saturation(speed_left));
+    //rightMotor.drive(saturation(speed_right));
+
+    //debug();
     // main_PID.debug();
-    Serial.println("");
+    //Serial.println("");
 
+    //virar à direita
+    if(position <= 3000){
+        leftMotor.drive(600);
+        rightMotor.drive(0);
+    }
+    //virar reto
+    else if(position >= 3000 && position <= 4000){
+        leftMotor.drive(600);
+        rightMotor.drive(600);
+    }
+    //virar à esquerda
+    else {
+        leftMotor.drive(0);
+        rightMotor.drive(600);
+    }
 }
 
 
